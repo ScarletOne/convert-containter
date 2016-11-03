@@ -4,4 +4,4 @@ compiler:
     - gcc
 
 script:
-    - cmake && make
+    - cmake && make && ./tests
