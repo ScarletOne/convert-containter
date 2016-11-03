@@ -3,7 +3,7 @@ project(convert-container)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-set(LIBS_DIR LIBS)
+set(UT_LIBS_DIR UT/LIBS)
 include_directories(${LIBS_DIR}/Catch)
 
 set(TEST_FILES UT/convertUT.cpp)
