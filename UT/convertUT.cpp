@@ -11,8 +11,3 @@ TEST_CASE("just a dummy passing test", "[dummy]")
 {
     REQUIRE(dummyFunc() == 1);
 }
-
-TEST_CASE("just a dummy failing test", "[dummy]")
-{
-    REQUIRE(dummyFunc() == 2);
-}
