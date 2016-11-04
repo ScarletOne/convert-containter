@@ -23,10 +23,9 @@ auto convert(const In& inContainer)
                                Out>::type
 {
     Out outContainer;
-    for(auto item : inContainer)
-    {
-        outContainer.insert(std::end(outContainer), item);
-    }
+    std::copy(std::begin(inContainer),
+              std::end(inContainer),
+              std::inserter(outContainer, outContainer.end()));
 
     return outContainer;
 }
