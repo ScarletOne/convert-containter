@@ -1,9 +1,15 @@
 #pragma once
 
-#include <vector>
+#include <algorithm>
 
-template<typename T>
-std::vector<T> convert(std::vector<T> vec)
+template<typename OutContainer, typename InContainer>
+OutContainer convert(const InContainer& inContainer)
 {
-    return vec;
+    OutContainer outContainer;
+    for(item : inContainer)
+    {
+        outContainer.insert(std::end(outContainer), item);
+    }
+
+    return outContainer;
 }
