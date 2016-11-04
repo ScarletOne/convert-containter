@@ -44,6 +44,5 @@ before_install:
   - sudo apt-get install -y libopencv-dev
 
 script:
-    - cmake .
-    - make
+    - cmake -DCMAKE_CXX_COMPILER=$COMPILER . && make
     - ./tests
