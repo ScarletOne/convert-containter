@@ -8,8 +8,9 @@
 
 
 template<typename Out, typename In>
-typename std::enable_if<!IsContainer<In>::isContainer, Out>::type
-convert(const In& in)
+auto convert(const In& in)
+    -> typename std::enable_if<!IsContainer<In>::isContainer,
+                                Out>::type
 {
     Out outContainer;
     outContainer.insert(std::end(outContainer), in);
@@ -17,8 +18,9 @@ convert(const In& in)
 }
 
 template<typename Out, typename In>
-typename std::enable_if<IsContainer<In>::isContainer, Out>::type
-convert(const In& inContainer)
+auto convert(const In& inContainer)
+    -> typename std::enable_if<IsContainer<In>::isContainer,
+                               Out>::type
 {
     Out outContainer;
     for(auto item : inContainer)
