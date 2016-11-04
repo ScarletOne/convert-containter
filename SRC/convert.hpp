@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <utility>
 #include <iterator>
+#include <queue>
 
 
 template<typename Out, typename In>
@@ -19,7 +20,8 @@ auto convertTo(const In& in)
 
 template<typename Out, typename In>
 auto convertTo(const In& inContainer)
-    -> typename std::enable_if<IsContainer<In>::isContainer,
+    -> typename std::enable_if<(IsContainer<In>::isContainer
+                               && !std::is_same<Out, std::queue<typename Out::value_type> >::value),
                                Out>::type
 {
     Out outContainer;
@@ -27,5 +29,21 @@ auto convertTo(const In& inContainer)
               std::end(inContainer),
               std::inserter(outContainer, outContainer.end()));
 
+    return outContainer;
+}
+
+template<typename Out, typename In>
+auto convertTo(const std::queue<In>& in)
+    -> typename std::enable_if<!IsContainer<In>::isContainer
+                               && std::is_same<Out, std::queue<typename Out::value_type> >::value,
+                               Out>::type
+{
+    std::queue<In> tmpQueue = in;
+    Out outContainer;
+    while(!tmpQueue.empty())
+    {
+        outContainer.push(tmpQueue.front());
+        tmpQueue.pop();
+    }
     return outContainer;
 }
