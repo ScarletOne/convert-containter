@@ -8,7 +8,7 @@
 
 
 template<typename Out, typename In>
-auto convert(const In& in)
+auto convertTo(const In& in)
     -> typename std::enable_if<!IsContainer<In>::isContainer,
                                 Out>::type
 {
@@ -18,7 +18,7 @@ auto convert(const In& in)
 }
 
 template<typename Out, typename In>
-auto convert(const In& inContainer)
+auto convertTo(const In& inContainer)
     -> typename std::enable_if<IsContainer<In>::isContainer,
                                Out>::type
 {
