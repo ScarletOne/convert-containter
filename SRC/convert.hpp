@@ -2,7 +2,8 @@
 
 #include <vector>
 
-std::vector<int> convert(std::vector<int> vec)
+template<typename T>
+std::vector<T> convert(std::vector<T> vec)
 {
     return vec;
 }
