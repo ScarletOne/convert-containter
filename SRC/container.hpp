@@ -1,5 +1,7 @@
 #pragma once
 
+#include <queue>
+
 template <typename Container>
 struct IsContainer
 {

@@ -32,12 +32,11 @@ TEST_CASE("should convert int to vector<int>", "[base type deduction]")
     REQUIRE(required_output == convertTo<std::vector<int>>(input));
 }
 
-TEST_CASE("should be able to convert to Queue", "[special cases]")
+TEST_CASE("should be able to convert to Queue", "[Queue]")
 {
     std::vector<int> input_vector = { 1 };
     std::queue<int> expected_queue;
     expected_queue.push(1);
-    auto output_queue = convertTo<std::queue<int>>(expected_queue);
+    auto output_queue = convertTo<std::queue<int>>(input_vector);
     REQUIRE(output_queue.size() == expected_queue.size());
-
 }

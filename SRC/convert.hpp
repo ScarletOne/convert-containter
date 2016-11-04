@@ -20,8 +20,8 @@ auto convertTo(const In& in)
 
 template<typename Out, typename In>
 auto convertTo(const In& inContainer)
-    -> typename std::enable_if<(IsContainer<In>::isContainer
-                               && !std::is_same<Out, std::queue<typename Out::value_type> >::value),
+    -> typename std::enable_if<IsContainer<In>::isContainer
+                               && !std::is_same<Out, std::queue<typename Out::value_type> >::value,
                                Out>::type
 {
     Out outContainer;
@@ -33,17 +33,15 @@ auto convertTo(const In& inContainer)
 }
 
 template<typename Out, typename In>
-auto convertTo(const std::queue<In>& in)
-    -> typename std::enable_if<!IsContainer<In>::isContainer
+auto convertTo(const In& in)
+    -> typename std::enable_if<IsContainer<In>::isContainer
                                && std::is_same<Out, std::queue<typename Out::value_type> >::value,
                                Out>::type
 {
-    std::queue<In> tmpQueue = in;
     Out outContainer;
-    while(!tmpQueue.empty())
+    for(auto item : in)
     {
-        outContainer.push(tmpQueue.front());
-        tmpQueue.pop();
+        outContainer.push(item);
     }
     return outContainer;
 }
