@@ -39,4 +39,13 @@ TEST_CASE("should be able to convert to Queue", "[Queue]")
     expected_queue.push(1);
     auto output_queue = convertTo<std::queue<int>>(input_vector);
     REQUIRE(output_queue.size() == expected_queue.size());
+    REQUIRE(output_queue.front() == expected_queue.front());
+}
+
+TEST_CASE("should be able to convert from Queue", "[Queue]")
+{
+    std::queue<int> input_queue;
+    input_queue.push(1);
+    std::vector<int> expected_vector = { 1 };
+    REQUIRE(expected_vector == convertTo<std::vector<int>>(input_queue));
 }
