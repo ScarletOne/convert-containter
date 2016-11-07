@@ -46,3 +46,6 @@ before_install:
 script:
     - cmake -DCMAKE_CXX_COMPILER=$COMPILER . && make
     - ./tests
+
+notifications:
+  email: false
