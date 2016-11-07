@@ -63,3 +63,19 @@ auto convertTo(const std::queue<TypeInQueue>& in)
     }
     return outContainer;
 }
+
+template <typename Out, typename TypeInQueue>
+auto convertTo(const std::queue<TypeInQueue>& in)
+    -> typename std::enable_if<!IsContainer<TypeInQueue>::isContainer
+                               && std::is_same<Out, std::queue<typename Out::value_type> >::value,
+                               Out>::type
+{
+    Out outContainer;
+    std::queue<TypeInQueue> tmp_queue = in;
+    while(!tmp_queue.empty())
+    {
+        outContainer.push(tmp_queue.front());
+        tmp_queue.pop();
+    }
+    return outContainer;
+}
