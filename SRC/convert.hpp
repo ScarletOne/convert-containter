@@ -41,9 +41,7 @@ auto convertTo(const In& in)
 {
     Out outContainer;
     for(auto item : in)
-    {
         outContainer.push(item);
-    }
     return outContainer;
 }
 

@@ -6,9 +6,34 @@
 #include <vector>
 #include <set>
 
+std::initializer_list<int> prepareContainer()
+{
+    return {1,2,3,5,8};
+}
+
+std::queue<int> prepareQueue()
+{
+    std::vector<int> vector = prepareContainer();
+    std::queue<int> queue;
+    for(auto item : vector)
+        queue.push(item);
+    return queue;
+}
+
+void compareQueues(std::queue<int> expectedQueue, std::queue<int> outputQueue)
+{
+    REQUIRE(expectedQueue.size() == outputQueue.size());
+    while(!expectedQueue.empty() and !outputQueue.empty())
+    {
+        REQUIRE(expectedQueue.front() == outputQueue.front());
+        expectedQueue.pop();
+        outputQueue.pop();
+    }
+}
+
 TEST_CASE("should convert std::vector<int> to std::vector<int>", "[one dimensional]")
 {
-    std::vector<int> test_vector = { 1,2,3 };
+    std::vector<int> test_vector =  prepareContainer();
     REQUIRE(test_vector == convertTo<std::vector<int>>(test_vector));
 }
 
@@ -20,8 +45,8 @@ TEST_CASE("should convert std::vector<std::string> to std::vector<std::string>",
 
 TEST_CASE("should convert std::vector<int> to std::set<int>", "[one dimensional]")
 {
-    std::vector<int> test_vector = { 1,2,3 };
-    std::set<int> test_set = { 1,2,3 };
+    std::vector<int> test_vector =  prepareContainer();
+    std::set<int> test_set = prepareContainer();
     REQUIRE(test_set == convertTo<std::set<int>>(test_vector));
 }
 
@@ -34,29 +59,23 @@ TEST_CASE("should convert int to vector<int>", "[base type deduction]")
 
 TEST_CASE("should be able to convert to Queue", "[Queue]")
 {
-    std::vector<int> input_vector = { 1 };
-    std::queue<int> expected_queue;
-    expected_queue.push(1);
+    std::vector<int> input_vector = prepareContainer();
+    std::queue<int> expected_queue = prepareQueue();
     auto output_queue = convertTo<std::queue<int>>(input_vector);
-    REQUIRE(output_queue.size() == expected_queue.size());
-    REQUIRE(output_queue.front() == expected_queue.front());
+    compareQueues(output_queue, expected_queue);
 }
 
 TEST_CASE("should be able to convert from Queue", "[Queue]")
 {
-    std::queue<int> input_queue;
-    input_queue.push(1);
-    std::vector<int> expected_vector = { 1 };
+    std::queue<int> input_queue = prepareQueue();
+    std::vector<int> expected_vector = prepareContainer();
     REQUIRE(expected_vector == convertTo<std::vector<int>>(input_queue));
 }
 
 TEST_CASE("should be able to convert Queue into Queue", "[Queue]")
 {
-    std::queue<int> input_queue;
-    input_queue.push(1);
-    std::queue<int> expected_queue;
-    expected_queue.push(1);
+    std::queue<int> input_queue = prepareQueue();
+    std::queue<int> expected_queue = prepareQueue();
     auto output_queue = convertTo<std::queue<int>>(input_queue);
-    REQUIRE(output_queue.size() == expected_queue.size());
-    REQUIRE(output_queue.front() == expected_queue.front());
+    compareQueues(output_queue, expected_queue);
 }
