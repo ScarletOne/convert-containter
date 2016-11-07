@@ -6,14 +6,9 @@
 #include <vector>
 #include <set>
 
-std::initializer_list<int> prepareContainer()
-{
-    return {1,2,3,5,8};
-}
-
 std::queue<int> prepareQueue()
 {
-    std::vector<int> vector = prepareContainer();
+    std::vector<int> vector = {1,2,3,5,8};
     std::queue<int> queue;
     for(auto item : vector)
         queue.push(item);
@@ -33,7 +28,7 @@ void compareQueues(std::queue<int> expectedQueue, std::queue<int> outputQueue)
 
 TEST_CASE("should convert std::vector<int> to std::vector<int>", "[one dimensional]")
 {
-    std::vector<int> test_vector =  prepareContainer();
+    std::vector<int> test_vector =  {1,2,3,5,8};
     REQUIRE(test_vector == convertTo<std::vector<int>>(test_vector));
 }
 
@@ -45,8 +40,8 @@ TEST_CASE("should convert std::vector<std::string> to std::vector<std::string>",
 
 TEST_CASE("should convert std::vector<int> to std::set<int>", "[one dimensional]")
 {
-    std::vector<int> test_vector =  prepareContainer();
-    std::set<int> test_set = prepareContainer();
+    std::vector<int> test_vector =  {1,2,3,5,8};
+    std::set<int> test_set = {1,2,3,5,8};
     REQUIRE(test_set == convertTo<std::set<int>>(test_vector));
 }
 
@@ -59,7 +54,7 @@ TEST_CASE("should convert int to vector<int>", "[base type deduction]")
 
 TEST_CASE("should be able to convert to Queue", "[Queue]")
 {
-    std::vector<int> input_vector = prepareContainer();
+    std::vector<int> input_vector = {1,2,3,5,8};
     std::queue<int> expected_queue = prepareQueue();
     auto output_queue = convertTo<std::queue<int>>(input_vector);
     compareQueues(output_queue, expected_queue);
@@ -68,7 +63,7 @@ TEST_CASE("should be able to convert to Queue", "[Queue]")
 TEST_CASE("should be able to convert from Queue", "[Queue]")
 {
     std::queue<int> input_queue = prepareQueue();
-    std::vector<int> expected_vector = prepareContainer();
+    std::vector<int> expected_vector = {1,2,3,5,8};
     REQUIRE(expected_vector == convertTo<std::vector<int>>(input_queue));
 }
 
